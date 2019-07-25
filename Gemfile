@@ -64,3 +64,6 @@ gem 'autoprefixer-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'simple_form'
 
+# Other gems
+
+gem 'rest-client'
