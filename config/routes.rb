@@ -6,5 +6,5 @@ Rails.application.routes.draw do
     resources :doses, only: [:new, :create]
   end
 
-  get 'cocktails/:id', to: 'doses#destroy'
+  get 'cocktails/:id', to: 'doses#destroy', as: :destroy_dose
 end
