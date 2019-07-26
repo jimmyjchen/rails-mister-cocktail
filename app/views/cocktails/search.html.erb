@@ -4,7 +4,7 @@
 
   <img src="<%= @cocktail[:image_url] %>" alt="">
 
-  <%= link_to "Add #{params[:query]} to your cocktails", cocktails_add_path(params[:query]) %>
+  <%= link_to "Add #{params[:search]["name"]} to your cocktails", cocktails_add_path(params[:search]["name"]) %>
 <% else %>
   <h1>Oops, no valid result returned.</h1>
 <% end %>

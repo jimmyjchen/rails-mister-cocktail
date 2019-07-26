@@ -2,8 +2,8 @@ require "json"
 require "rest-client"
 
 class CocktailsController < ApplicationController
-  before_action :set_cocktail, only:[:show, :edit, :update, :destroy]
-  before_action :set_doses, only:[:show, :edit, :update, :destroy]
+  before_action :set_cocktail, only: [:show, :edit, :update, :destroy]
+  before_action :set_doses, only: [:show, :edit, :update, :destroy]
 
   def index
     @cocktails = Cocktail.all.order(name: :asc)
@@ -42,12 +42,11 @@ class CocktailsController < ApplicationController
   end
 
   def search
-    @query = search_params
-    @cocktail = show_cocktail(params[:query])
+    @cocktail = show_cocktail(params[:search])
   end
 
   def add
-    @cocktail = add_cocktail(params[:query])
+    @cocktail = add_cocktail(params[:search])
     redirect_to cocktail_path(@cocktail)
   end
 
@@ -55,10 +54,6 @@ class CocktailsController < ApplicationController
 
   def cocktail_params
     params.require(:cocktail).permit(:name, :image_url, :description)
-  end
-
-  def search_params
-    params.permit(:query)
   end
 
   def set_cocktail
@@ -69,30 +64,51 @@ class CocktailsController < ApplicationController
     @doses = Dose.where(cocktail_id: params[:id])
   end
 
-  def show_cocktail(query)
-    cocktail = query.downcase.capitalize
 
-    response = RestClient.get "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=#{cocktail}"
-    result = JSON.parse(response)
-
+  def get_ingredients(result)
     ingredients = []
 
-    result["drinks"][0].keys.each do |key|
-      if key.match(/strIngredient/)
-        ingredients << result["drinks"][0][key] if result["drinks"][0][key] != ""
+    result["drinks"][0].each_pair do |key, value|
+      if value.nil?
+        p "#{key}'s value is nil"
+      elsif key.match(/strIngredient/) && value.match(/\S/)
+        ingredients << result["drinks"][0][key]
+      else
+        p "#{key}'s value is empty"
       end
     end
+    ingredients
+  end
 
+  def get_doses(result)
     doses = []
 
-    result["drinks"][0].keys.each do |key|
-      if key.match(/strMeasure/)
-        doses << result["drinks"][0][key] if result["drinks"][0][key] != ""
+    result["drinks"][0].each_pair do |key, value|
+      if value.nil?
+        p "#{key}'s value is nil"
+      elsif key.match(/strMeasure/) && value.match(/\S/)
+        doses << result["drinks"][0][key]
+      else
+        p "#{key}'s value is empty"
       end
     end
+    doses
+  end
+
+  def show_cocktail(query)
+    cocktail = query["name"].downcase.capitalize
+    response = RestClient.get "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=#{cocktail}"
+    result = JSON.parse(response)
+    if result["drinks"].nil?
+      return nil
+    end
+
+    ingredients = get_ingredients(result)
+
+    doses = get_doses(result)
 
     until doses.length == ingredients.length
-      doses << ' '
+      doses << 'N/A'
     end
 
     @cocktail_show = {
@@ -103,6 +119,7 @@ class CocktailsController < ApplicationController
       ingredients: ingredients,
       doses: doses
     }
+
     @cocktail_show
   end
 
@@ -126,21 +143,9 @@ class CocktailsController < ApplicationController
     @new_cocktail.image_url = result["drinks"][0]["strDrinkThumb"]
     @new_cocktail.save
 
-    ingredients = []
+    ingredients = get_ingredients(result)
 
-    result["drinks"][0].keys.each do |key|
-      if key.match(/strIngredient/)
-        ingredients << result["drinks"][0][key] if result["drinks"][0][key] != ""
-      end
-    end
-
-    doses = []
-
-    result["drinks"][0].keys.each do |key|
-      if key.match(/strMeasure/)
-        doses << result["drinks"][0][key] if result["drinks"][0][key] != ""
-      end
-    end
+    doses = get_doses(result)
 
     ingredient_ids = []
 
@@ -155,7 +160,7 @@ class CocktailsController < ApplicationController
     end
 
     until doses.length == ingredients.length
-      doses << ' '
+      doses << 'N/A'
     end
 
     i = 0
