@@ -1,3 +1,13 @@
 .container-edit {
   margin-top: 48px;
 }
+
+.container-error {
+  margin: 50px;
+  a {
+    color: rgb(100,100,100);
+  }
+  a:hover {
+    color: rgb(50,50,50);
+  }
+}

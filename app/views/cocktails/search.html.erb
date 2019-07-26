@@ -1,51 +1,43 @@
 <% if @cocktail %>
   <div class="container">
     <div class="container-cocktail">
-      <img src="<%= @cocktail.image_url %>" class="img-cocktail" alt="">
+      <img src="<%= @cocktail[:image_url] %>" class="img-cocktail" alt="">
       <div class="content-cocktail">
         <div class="header-content-cocktail">
-          <h3><%= @cocktail.name %></h3>
-          <%= link_to edit_cocktail_path(@cocktail.id) do %>
-            <i class="fas fa-edit icon"></i>
-          <% end %>
+          <h3><%= @cocktail[:name] %></h3>
         </div>
-        <% @doses.each do |dose| %>
+        <% @cocktail[:doses].each_with_index do |dose, index| %>
           <div class="list-item-ingredient">
             <div>
-              <strong><%= dose.ingredient.name %><span>:  </span></strong><%= dose.description %>
+              <strong><%= @cocktail[:ingredients][index] %><span>:  </span></strong><%= dose %>
             </div>
             <div>
-              <%= link_to cocktail_path(@cocktail.id), method: :delete, data: { confirm: "Are you sure?" } do %>
-                <i class="far fa-trash-alt icon"></i>
-              <% end %>
+
             </div>
           </div>
         <% end %>
-        <div class="list-item-ingredient add">
-          <div>
-            <%= link_to 'Add dose', new_cocktail_dose_path(@cocktail) %>
-          </div>
-          <div>
-            <%= link_to new_cocktail_dose_path(@cocktail.id) do %>
-              <i class="fas fa-plus icon"></i>
-            <% end %>
-          </div>
-        </div>
 
         <div class="content-body-cocktail">
           <div class="content-body-text">
-            <strong>Served in:  </strong><%= @cocktail.glass %>
+            <strong>Served in:  </strong><%= @cocktail[:glass] %>
           </div>
           <div class="content-body-text">
-            <strong>Instructions: </strong><%= @cocktail.description %>
+            <strong>Instructions: </strong><%= @cocktail[:description] %>
           </div>
+        </div>
+        <div class="add-cocktail">
+          <%= link_to cocktails_add_path(params[:search]["name"]) do %>
+            <i class="fas fa-plus"></i>
+            <span>Add <%= params[:search]["name"] %> to your cocktails</span>
+          <% end %>
         </div>
 
         <div class="box-back">
-          <div><%= link_to cocktails_path do %>
-            <i class="fas fa-arrow-left icon"></i>
-            <span>Back to list</span>
-          <% end %>
+          <div>
+            <%= link_to cocktails_path do %>
+              <i class="fas fa-arrow-left icon"></i>
+              <span>Back to list</span>
+            <% end %>
           </div>
         </div>
 
@@ -53,7 +45,16 @@
     </div>
   </div>
 
-  <%= link_to "Add #{params[:search]["name"]} to your cocktails", cocktails_add_path(params[:search]["name"]) %>
+
 <% else %>
-  <h1>Oops, no valid result returned.</h1>
+<div class="container-error">
+  <h3>Oops, you broke the internet.</h3>
+  <p>(Or more likely, the cocktail you searched for does not exist. Please search again.)</p>
+  <div><h3>
+    <%= link_to cocktails_path do %>
+      <i class="fas fa-arrow-left icon"></i>
+      <span>Back to home</span>
+    <% end %></h3>
+  </div>
+</div>
 <% end %>
