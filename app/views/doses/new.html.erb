@@ -5,6 +5,7 @@
       <%= simple_form_for [@cocktail, @dose] do |f| %>
         <div class="form-group">
           <%= f.input :description %>
+        </div>
         <div class="form-group">
           <%= f.association :ingredient %>
         </div>

@@ -5,6 +5,10 @@
       <%= simple_form_for (@cocktail) do |f| -%>
         <div class="form-group">
           <%= f.input :name %>
+        </div>
+        <div class="form-group">
+          <%= f.input :description %>
+        </div>
         <div class="form-group">
           <%= f.input :rating, collection: [1,2,3,4,5], input_html: {value: "Rating"} %>
         </div>
