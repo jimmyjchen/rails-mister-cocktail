@@ -34,6 +34,18 @@
 
       <div class="content-body-cocktail">
         <div class="content-body-text">
+          <strong>Rating:  </strong>
+          <% if @cocktail.rating == 0 %>
+            <span>No rating yet!</span>
+          <% else %>
+            <% i = 0 %>
+            <% while i < @cocktail.rating %>
+              <i class="fas fa-star" style="color: #2a7a66"></i>
+              <% i += 1 %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="content-body-text">
           <strong>Served in:  </strong><%= @cocktail.glass %>
         </div>
         <div class="content-body-text">
