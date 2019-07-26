@@ -1,7 +1,34 @@
-<h1>New Cocktail</h1>
-<%= simple_form_for (@cocktail) do |f| -%>
-  <div class="form-group">
-    <%= f.input :name %>
-    <%= f.submit %>
+<div class="banner add">
+  <div class="banner-container">
+    <div class="banner-header">
+      <div class="header-menu">
+        <%= link_to 'Back to home', cocktails_path %>
+      </div>
+    </div>
+    <img class="img-banner" style="object-fit:cover;vertical-align:bottom" alt="" decoding="auto" sizes="100vw" src="https://images.unsplash.com/photo-1529502669403-c073b74fcefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80">
+    <div class="banner-text-container">
+      <div class="row">
+        <div class="col col-sm-12 col-md-8 col-lg-6">
+          <div class="banner-text">
+            <div class="banner-head-text">
+              <h3>Add a cocktail.</h3>
+            </div>
+            <%= simple_form_for (@cocktail) do |f| -%>
+              <div class="form-group">
+                <%= f.input :name, input_html: {value: ""} %>
+              </div>
+              <div class="form-group">
+                <%= f.input :rating, collection: [1,2,3,4,5], input_html: {value: "Rating"} %>
+              </div>
+              <div class="form-group">
+                <%= f.submit "Add Recipe", class: "btn btn-primary btn-search" %>
+              </div>
+            <% end -%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-<% end -%>
+</div>
+

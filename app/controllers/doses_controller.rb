@@ -3,6 +3,7 @@ class DosesController < ApplicationController
 
   def new
     @dose = Dose.new
+    @ingredients = Ingredient.all.order(name: :asc)
   end
 
   def create

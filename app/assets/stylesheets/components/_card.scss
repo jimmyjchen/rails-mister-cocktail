@@ -21,6 +21,12 @@
 
 .card-header-list {
   display: flex;
+  justify-content: space-between;
+}
+
+.icons-header-list {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .card-footer {

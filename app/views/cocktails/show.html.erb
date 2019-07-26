@@ -1,22 +1,54 @@
-<h1><%= @cocktail.name %></h1>
+<div class="container">
 
-<img src="<%= @cocktail.image_url %>" alt="">
-<br />
+  <div class="container-cocktail">
+    <img src="<%= @cocktail.image_url %>" class="img-cocktail" alt="">
+    <div class="content-cocktail">
+      <div class="header-content-cocktail">
+        <h3><%= @cocktail.name %></h3>
+        <%= link_to edit_cocktail_path(@cocktail.id) do %>
+          <i class="fas fa-edit icon"></i>
+        <% end %>
+      </div>
+      <% @doses.each do |dose| %>
+        <div class="list-item-ingredient">
+          <div>
+            <strong><%= dose.ingredient.name %><span>:  </span></strong><%= dose.description %>
+          </div>
+          <div>
+            <%= link_to cocktail_path(@cocktail.id), method: :delete, data: { confirm: "Are you sure?" } do %>
+              <i class="far fa-trash-alt icon"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="list-item-ingredient add">
+        <div>
+          <%= link_to 'Add dose', new_cocktail_dose_path(@cocktail) %>
+        </div>
+        <div>
+          <%= link_to new_cocktail_dose_path(@cocktail.id) do %>
+            <i class="fas fa-plus icon"></i>
+          <% end %>
+        </div>
+      </div>
 
-<% @doses.each do |dose| %>
-  <%= dose.ingredient.name %><span>: </span><%= dose.description %><span> - </span><%= link_to 'Delete', dose_path(dose), method: :delete, data: { confirm: 'Are you sure?' } %>
-  <br />
-<% end %>
+      <div class="content-body-cocktail">
+        <div class="content-body-text">
+          <strong>Served in:  </strong><%= @cocktail.glass %>
+        </div>
+        <div class="content-body-text">
+          <strong>Instructions: </strong><%= @cocktail.description %>
+        </div>
+      </div>
 
-<%= @cocktail.glass %>
-<br />
-<%= @cocktail.description %>
-<br />
+      <div class="box-back">
+        <div><%= link_to cocktails_path do %>
+          <i class="fas fa-arrow-left icon"></i>
+          <span>Back to list</span>
+        <% end %>
+        </div>
+      </div>
 
-<%= link_to 'Add dose', new_cocktail_dose_path(@cocktail) %>
-
-<%= link_to 'Edit', edit_cocktail_path(@cocktail) %>
-
-<%= link_to 'Back to list', cocktails_path %>
-
-
+    </div>
+  </div>
+</div>

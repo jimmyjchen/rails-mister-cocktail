@@ -1,7 +1,24 @@
-<h1>Edit <%= @cocktail.name %></h1>
-<%= simple_form_for (@cocktail) do |f| -%>
-  <div class="form-group">
-    <%= f.input :name %>
-    <%= f.submit %>
+<div class="container-edit">
+  <div class="row">
+    <div class="col col-sm-8 offset-2">
+      <h3>Edit <%= @cocktail.name %></h3>
+      <%= simple_form_for (@cocktail) do |f| -%>
+        <div class="form-group">
+          <%= f.input :name %>
+        <div class="form-group">
+          <%= f.input :rating, collection: [1,2,3,4,5], input_html: {value: "Rating"} %>
+        </div>
+        <div class="form-group">
+          <%= f.submit class: "btn btn-primary btn-ghost" %>
+        </div>
+      <% end -%>
+      <div class="box-back">
+        <div><%= link_to cocktails_path do %>
+          <i class="fas fa-arrow-left icon"></i>
+          <span>Back to list</span>
+        <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end -%>
+</div>
