@@ -1,4 +1,73 @@
-<h1>Cocktails</h1>
+<div class="banner">
+  <div class="banner-container">
+    <img class="img-banner" style="object-fit:cover;vertical-align:bottom" alt="" decoding="auto" sizes="100vw" src="https://images.unsplash.com/photo-1529502669403-c073b74fcefb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80">
+    <div class="banner-text-container">
+      <div class="row">
+        <div class="col col-sm-12 col-md-8 col-lg-6">
+          <div class="banner-text">
+            <div class="banner-header">
+              <h3>Search and save cocktail recipes.</h3>
+            </div>
+            <form action="cocktails/search" class="form-inline mt-3 d-flex" method="post">
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+              <div class="form-group mr-3">
+                <input type="input" class="form-control" name="query" id="search-field" placeholder="Margarita">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn-red">Search</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main-container">
+  <div class="cards">
+    <% @cocktails.each do |cocktail| %>
+      <div class="card" style="width: 14em;">
+        <%= link_to cocktail_path(cocktail.id) do %>
+          <img class="card-img-top" src="<%= cocktail.image_url %>" alt="cocktail.name">
+          <div class="card-body main">
+            <div class="card-header-list">
+              <h5 class="card-title" style="color: rgb(50,50,50)"><%= cocktail.name %></h5>
+              <div>
+                <%= link_to edit_cocktail_path(cocktail.id) do %>
+                  <i class="fas fa-edit icon"></i>
+                <% end %>
+                </div>
+              <div>
+                <%= link_to cocktail_path(cocktail.id), method: :delete, data: { confirm: "Are you sure?" } do %>
+                  <i class="far fa-trash-alt icon"></i>
+                <% end %>
+              </div>
+            </div>
+            <p class="card-text"></p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item card-footer">
+              <div>
+                <% if cocktail.rating == 0 %>
+                  <span>No rating yet!</span>
+                <% else %>
+                  <% i = 0 %>
+                  <% while i < cocktail.rating %>
+                    <i class="fas fa-star" style="color: #2a7a66"></i>
+                    <% i += 1 %>
+                  <% end %>
+                <% end %>
+              </div>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 
 <% @cocktails.each do |cocktail| %>
   <%= link_to cocktail.name, cocktail_path(cocktail) %><span> - </span>

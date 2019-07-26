@@ -1,12 +1,22 @@
 <h1><%= @cocktail.name %></h1>
 
+<img src="<%= @cocktail.image_url %>" alt="">
+<br />
+
 <% @doses.each do |dose| %>
-  <%= dose.ingredient.name %><span>: </span><%= dose.description %><span> - </span><%= link_to 'Delete', destroy_dose_path %>
+  <%= dose.ingredient.name %><span>: </span><%= dose.description %><span> - </span><%= link_to 'Delete', dose_path(dose), method: :delete, data: { confirm: 'Are you sure?' } %>
   <br />
 <% end %>
+
+<%= @cocktail.glass %>
+<br />
+<%= @cocktail.description %>
+<br />
 
 <%= link_to 'Add dose', new_cocktail_dose_path(@cocktail) %>
 
 <%= link_to 'Edit', edit_cocktail_path(@cocktail) %>
 
 <%= link_to 'Back to list', cocktails_path %>
+
+

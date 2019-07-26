@@ -1,0 +1,27 @@
+.footer {
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.footer .list-icons {
+  text-align: center;
+  padding: 10px;
+}
+
+.footer .list-icons i {
+  color: #FF5A5F;
+  font-size: 20px;
+  padding: 5px;
+  opacity: 0.6;
+}
+
+.footer .list-icons i:hover {
+  opacity: 1;
+}
+
+.footer p {
+  margin: 0;
+  padding-bottom: 30px;
+  text-align: center;
+  color: #484848;
+  opacity: 0.6;
+}
