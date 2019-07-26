@@ -15,7 +15,7 @@
             <strong><%= dose.ingredient.name %><span>:  </span></strong><%= dose.description %>
           </div>
           <div>
-            <%= link_to cocktail_path(@cocktail.id), method: :delete, data: { confirm: "Are you sure?" } do %>
+            <%= link_to dose_path(dose.id), method: :delete, data: { confirm: "Are you sure?" } do %>
               <i class="far fa-trash-alt icon"></i>
             <% end %>
           </div>

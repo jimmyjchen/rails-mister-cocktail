@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 0px;
   width: 800px;
-  margin: 50px;
+  margin: 50px 0px;
 }
 
 @media(max-width: 992px) {
@@ -13,13 +13,13 @@
 }
 
 .img-cocktail {
-  height: 400px;
-  width: 400px;
+  height: 480px;
+  width: 480px;
 }
 
 .content-cocktail {
-  height: 400px;
-  width: 400px;
+  height: 480px;
+  width: 480px;
   padding: 16px;
   border: 1px solid rgb(200,200,200);
 }
